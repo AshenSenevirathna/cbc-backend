@@ -3,24 +3,31 @@ import Product from "../models/product.js";
 export async function getProducts(req, res) {
     const productList = await Product.find()
 
-    res.json({
-        list : productList
-    })
+    try {
+        res.json({
+            list: productList
+        })
+    } catch (e) {
+        res.json({
+            message: "Error"
+        })
+    }
+
 }
 
 export function createProduct(req, res) {
     console.log(req.user)
 
-    if(req.user == null){
+    if (req.user == null) {
         res.json({
-            message : "You are not logged in"
+            message: "You are not logged in"
         })
         return
     }
 
-    if(req.user.type != "admin"){
+    if (req.user.type != "admin") {
         res.json({
-            message : "You are not admin"
+            message: "You are not admin"
         })
         return
     }
